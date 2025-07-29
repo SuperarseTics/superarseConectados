@@ -1,4 +1,4 @@
-# My PHP MVC Application
+# Superarse Conectados
 
 This is a simple PHP MVC application that demonstrates the Model-View-Controller architecture. The application is structured to separate concerns, making it easier to manage and scale.
 
@@ -8,16 +8,31 @@ This is a simple PHP MVC application that demonstrates the Model-View-Controller
 my-php-mvc-app
 ├── app
 │   ├── controllers
-│   │   └── HomeController.php
+│   │   └── LoginController.php
+|   |   └── ProgramasController.php
+│   ├── helpers
+│   │   └── View.php
 │   ├── models
 │   │   └── Database.php
 │   └── views
-│       └── home.php
+│       └── informacion.php
+│       └── login.php
+├── assets
+│   ├── logos
+│   │   └── eLibro.png
+|   |   └── logoSuperarse.png
+│   │   └── office365.png
+|   |   └── Q10.png
+├── css
+│   └── style.css
 ├── public
 │   └── index.php
+│   └── validarLogin.php
 ├── config
 │   └── config.php
 ├── composer.json
+├── composer.lock
+└── .htaccess
 └── README.md
 ```
 
