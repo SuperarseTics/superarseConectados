@@ -1,260 +1,590 @@
-:root {
-    --color-superarse-gris-texto: #4A4A4A;
-    --color-superarse-azul: #007BFF;
-    --color-superarse-verde-lima: #8BC34A;
-    --color-superarse-amarillo: #FFC107;
-    --color-superarse-naranja-oscuro: #FF6F00;
-
-    --color-fondo-suave: #f4f7fa;
-    --color-blanco: #ffffff;
-    --color-sombra: rgba(0, 0, 0, 0.1);
-
-    --color-error-fondo: #f8d7da;
-    --color-error-borde: #f5c6cb;
-    --color-error-texto: #721c24;
-}
+/* --- Estilos Generales y del Login (Manteniendo la base) --- */
 
 body {
-    background-color: var(--color-fondo-suave);
-    font-family: 'Arial', sans-serif;
-}
-
-h2,
-h4 {
-    color: var(--color-superarse-gris-texto);
-}
-
-.table th,
-.table td {
-    text-align: center;
-    /* Centrar el contenido de la celda */
-    vertical-align: middle;
-    /* Alinear verticalmente */
-    width: 33%;
-}
-
-.table-bordered {
-    border: 1px solid #ddd;
-}
-
-.table-striped tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
-}
-
-/* Estilo para las imágenes de las plataformas dentro de la tabla */
-.table td img {
-    /* Tamaño máximo para las imágenes */
-    max-width: 100%;
-    /* Máximo ancho */
-    max-height: 100%;
-    /* Máxima altura */
-
-    /* Asegurar que la imagen se ajuste proporcionalmente */
-    width: 40%;
-    height: 40%;
-
-    /* Centrar la imagen dentro de su contenedor */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.table td a {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    background: linear-gradient(to right, #4A148C, #673AB7, #E91E63); /* Degradado de fondo */
+    color: #333;
+    min-height: 100vh; /* Asegura que el cuerpo ocupe al menos toda la altura de la vista */
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+}
+
+/* Header (usado solo en el login si mantienes el mismo HTML para el login) */
+header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF; /* Texto del header blanco */
     text-align: center;
-    color: #007bff;
-    /* Color del enlace (puedes cambiarlo según tu preferencia) */
-    text-decoration: none;
-    /* Quitar subrayado */
-    font-weight: bold;
-    /* Puedes quitarlo si prefieres texto normal */
+    padding: 1rem 0;
 }
 
-.table td a:hover {
-    color: #0056b3;
-    /* Color cuando se pasa el ratón sobre el enlace */
-    text-decoration: underline;
-    /* Subrayar el enlace al pasar el ratón */
+header .logo {
+    max-height: 80px;
+    width: auto;
 }
 
-.navbar {
-    background-color: var(--color-superarse-azul);
-    z-index: 1050;
+header .lead {
+    font-weight: 500;
+    color: #FFFFFF;
 }
 
-.navbar-nav .nav-link {
-    color: var(--color-blanco) !important;
-    padding: 10px 15px;
+/* Main Content para el Login (solo si el login usa la clase 'main') */
+main.flex-grow-1 { /* Aseguramos que solo afecte al main del login */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    flex-grow: 1; /* Permite que ocupe el espacio restante */
 }
 
-.navbar-nav .nav-link:hover {
-    background-color: #0056b3;
-}
-
-.navbar-nav .dropdown-menu a {
-    color: var(--color-superarse-azul);
-}
-
-.navbar-nav .dropdown-menu a:hover {
-    background-color: #0056b3;
-    color: var(--color-blanco);
-}
-
-/* Ajustes para el botón de hamburguesa (navbar-toggler) */
-.navbar-toggler {
+/* Card del Formulario de Login */
+.card {
+    border-radius: 15px;
     border: none;
-    /* Quita el borde predeterminado del botón */
-    color: var(--color-blanco);
-    /* Color de las barras del icono hamburguesa */
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
-/* Estilo para cuando el menú está colapsado y la lista es visible */
-.collapse.navbar-collapse.show {
-    display: block;
-    /* Asegura que se despliegue correctamente */
+.card-title {
+    color: #4A148C;
+    font-weight: 700;
+    margin-bottom: 30px;
 }
 
-/* Barra de navegación */
-.navbar {
-    margin-bottom: 20px;
+.input-group-text {
+    background-color: #673AB7;
+    color: #FFFFFF;
+    border: 1px solid #673AB7;
+    border-right: none;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: .75rem 1rem;
 }
 
-.navbar-nav {
-    flex-direction: row;
+.form-control {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid #673AB7;
+    padding: .75rem 1rem;
 }
 
-/* Ajustes en pantallas pequeñas */
-@media (max-width: 768px) {
-    .navbar-nav {
-        text-align: center;
-    }
-
-    .navbar-toggler {
-        display: block;
-        border: none;
-        /* Asegura que el borde del botón esté limpio */
-        color: var(--color-blanco);
-    }
-
-    .navbar-collapse {
-        display: none;
-        /* Escondemos el menú por defecto */
-    }
-
-    .navbar-collapse.show {
-        display: block;
-        /* Mostramos el menú cuando está abierto */
-    }
-
-    .main-content {
-        margin-top: 100px;
-        /* Aumentamos el margen superior en pantallas pequeñas */
-    }
+.form-control:focus {
+    border-color: #E91E63;
+    box-shadow: 0 0 0 0.25rem rgba(233, 30, 99, 0.25);
 }
 
-/* Estilo de las secciones */
-.main-content {
-    margin-top: 50px;
-    padding: 20px;
+.btn-primary {
+    background-color: #E91E63;
+    border-color: #E91E63;
+    font-weight: 600;
+    padding: .75rem 1.5rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
 }
 
-.section-content {
-    display: none;
+.btn-primary:hover {
+    background-color: #C2185B;
+    border-color: #C2185B;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-h4 {
-    margin-bottom: 15px;
+/* Modal de Error (del login) */
+#errorModal .modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Estilo para los enlaces */
-a {
-    color: var(--color-superarse-azul);
-    text-decoration: none;
+#errorModal .modal-header {
+    background-color: #dc3545;
+    color: #FFFFFF;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
-a:hover {
-    text-decoration: underline;
+#errorModal .modal-title {
+    font-weight: 600;
 }
 
-/* Modal de Errores */
-.modal-content {
-    background-color: var(--color-error-fondo);
-    /* Fondo suave para el modal de error */
-    border: 1px solid var(--color-error-borde);
-    /* Borde para el modal */
+#errorModal .modal-body {
+    padding: 2rem;
+    font-size: 1.1rem;
+    color: #333;
 }
 
-.modal-header {
-    background-color: var(--color-error-borde);
-    /* Fondo para el encabezado del modal de error */
-    color: var(--color-error-texto);
-    /* Color de texto para el título del modal */
+#errorModal .modal-footer {
+    border-top: none;
+    padding: 1rem 2rem;
 }
 
-.modal-footer a.btn-secondary {
-    /* Específico para el botón "Cerrar" del modal */
+#errorModal .btn-secondary {
     background-color: #6c757d;
-    /* Gris de Bootstrap para un botón secundario */
     border-color: #6c757d;
-    color: var(--color-blanco);
-    /* Texto blanco para el botón secundario */
+    border-radius: 8px;
+    transition: all 0.2s ease;
 }
 
-.modal-footer a.btn-secondary:hover {
+#errorModal .btn-secondary:hover {
     background-color: #5a6268;
     border-color: #545b62;
 }
 
-/* Logo en el Login */
-.logo {
-    display: block;
-    margin: 0 auto 20px;
-    max-width: 150px;
-    /* Ajusta el tamaño del logo */
-}
-
-/* Botones */
-.btn-primary {
-    background-color: var(--color-superarse-azul);
-    /* Azul del logo */
-    border-color: var(--color-superarse-azul);
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-}
-
-/* Header */
-header {
-    background-color: var(--color-superarse-azul);
-    /* Azul del logo */
-    color: var(--color-blanco);
-    padding: 1rem;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-}
-
-/* Footer */
+/* Footer (si el login y la página de información comparten el mismo footer) */
 footer {
-    background-color: var(--color-superarse-gris-texto);
-    /* Gris oscuro del texto "Superarse" */
-    color: var(--color-blanco);
-    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #E0E0E0;
     text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 1000;
+    padding: 1rem 0;
+    margin-top: auto; /* Empuja el footer al final si el body es flex column */
 }
 
 footer p {
+    margin-bottom: 0;
+}
+
+/* --- Estilos para la Página de Información (Ahora sí, específicos para tu HTML) --- */
+
+/* Ajuste del body para usar el navbar fijo */
+body {
+    padding-top: 56px; /* Altura predeterminada del navbar de Bootstrap. Ajustar si el navbar cambia de tamaño. */
+}
+
+/* Navbar */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.6) !important; /* Fondo oscuro semitransparente para el navbar */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+    color: #FFFFFF !important; /* Blanco para el texto de la marca */
+    font-weight: 700;
+}
+
+.navbar-nav .nav-link {
+    color: #E0E0E0 !important; /* Gris claro para los enlaces del nav */
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #E91E63 !important; /* Rosa al pasar el mouse */
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-menu {
+    background-color: rgba(52, 58, 64, 0.9); /* Fondo ligeramente transparente para el dropdown */
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-item {
+    color: #E0E0E0;
+    transition: background-color 0.2s ease;
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-item:hover {
+    background-color: #673AB7; /* Azul-violeta al pasar el mouse */
+    color: #FFFFFF;
+}
+
+
+/* Contenido Principal de las Secciones (Información, Programas, Credenciales, Pagos) */
+.main-content {
+    padding-top: 30px; /* Padding adicional para asegurar espacio debajo del navbar */
+    padding-bottom: 30px;
+    flex-grow: 1; /* Permite que crezca para empujar el footer hacia abajo */
+    width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+.section-content {
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semitransparente como la tarjeta del login */
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px; /* Ancho máximo para el contenido principal */
+}
+
+.section-content h2 {
+    color: #4A148C; /* Morado oscuro para los títulos principales de sección */
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-content h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #E91E63; /* Línea de acento rosa */
+    border-radius: 2px;
+}
+
+.section-content h4 {
+    color: #673AB7; /* Azul-violeta para subtítulos */
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(103, 58, 183, 0.2); /* Línea de acento más suave */
+    padding-bottom: 5px;
+}
+
+/* --- Estilos Específicos para la Sección de Información de Usuario --- */
+#informacion .table {
+    display: block; /* La tabla completa se comporta como un bloque */
+    border: none; /* Quitamos el borde de la tabla */
+    margin: 0 auto; /* Centra la "tabla" */
+    padding: 0;
+    width: 100%; /* Ocupa el 100% del contenedor */
+}
+
+#informacion thead {
+    display: none; /* Ocultamos el encabezado de la tabla para móviles y desktop en esta sección */
+}
+
+#informacion tbody {
+    display: flex; /* Permite organizar las filas como tarjetas */
+    flex-wrap: wrap; /* Envuelve las tarjetas en múltiples líneas */
+    gap: 15px; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas */
+}
+
+#informacion tr {
+    display: flex; /* Cada fila (dato de usuario) se convierte en una tarjeta flexible */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    width: calc(50% - 15px); /* 2 tarjetas por fila en desktop, ajusta para el gap */
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center; /* Alinea el texto al centro dentro de la tarjeta */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+}
+
+#informacion tr:hover {
+    transform: translateY(-2px); /* Un ligero efecto hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+}
+
+#informacion td {
+    border: none; /* Eliminamos bordes individuales de las celdas */
+    padding: 5px 0; /* Ajustamos padding dentro de la tarjeta */
+    flex-grow: 1; /* Permite que el contenido ocupe el espacio */
+    word-wrap: break-word; /* Asegura que el texto se envuelva */
+    overflow-wrap: break-word;
+}
+
+/* Estilos para el "data-label" (la etiqueta del dato) */
+#informacion td:first-child {
+    font-size: 1em;
+    font-weight: 600;
+    color: #4A148C; /* Color para el label del dato */
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(74, 20, 140, 0.1); /* Línea debajo del label */
+    padding-bottom: 8px;
+}
+
+/* Estilos para el valor del dato (el contenido real) */
+#informacion td:last-child {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #E91E63; /* Color para el valor del dato */
+    line-height: 1.3;
+}
+
+/* Responsive para la sección de Información de Usuario */
+@media (max-width: 767.98px) { /* Móviles */
+    #informacion tr {
+        width: 95%; /* Ocupa casi todo el ancho en móviles pequeños */
+        max-width: 300px; /* Asegura un ancho máximo para que no se vea demasiado estirada */
+        padding: 12px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) { /* Tablets */
+    #informacion tr {
+        width: calc(50% - 15px); /* Mantener 2 columnas en tablets si el contenido lo permite */
+    }
+}
+
+
+/* --- Estilos Específicos para la Sección de Programas y Asignaturas --- */
+#programas .table {
+    display: block; /* La tabla completa se comporta como un bloque */
+    border: none; /* Quitamos el borde de la tabla */
+    margin: 0 auto; /* Centra la "tabla" */
+    padding: 0;
+    width: 100%; /* Ocupa el 100% del contenedor */
+}
+
+#programas thead {
+    display: none; /* Ocultamos el encabezado de la tabla para móviles y desktop en esta sección */
+}
+
+#programas tbody {
+    display: flex; /* Permite organizar las filas como tarjetas */
+    flex-wrap: wrap; /* Envuelve las tarjetas en múltiples líneas */
+    gap: 20px; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas */
+}
+
+#programas tr {
+    display: flex; /* Cada fila (programa) se convierte en una tarjeta flexible */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    width: calc(100% - 20px); /* Ocupa el ancho completo en una sola columna para desktop */
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left; /* Alinea el texto a la izquierda dentro de la tarjeta */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default; /* No es interactivo como las credenciales */
+}
+
+#programas tr:hover {
+    transform: translateY(-2px); /* Un ligero efecto hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+}
+
+#programas td {
+    border: none; /* Eliminamos bordes individuales de las celdas */
+    padding: 8px 0; /* Ajustamos padding dentro de la tarjeta */
+    flex-grow: 1; /* Permite que el contenido ocupe el espacio */
+    word-wrap: break-word; /* Asegura que el texto se envuelva */
+    overflow-wrap: break-word;
+}
+
+/* Estilos específicos para la celda de Programa */
+#programas td:first-child {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #4A148C; /* Color para el nombre del programa */
+    margin-bottom: 10px;
+    text-align: center; /* Centra el nombre del programa */
+    border-bottom: 1px solid rgba(74, 20, 140, 0.2); /* Línea debajo del nombre del programa */
+    padding-bottom: 10px;
+}
+
+/* Estilos para las listas de asignaturas dentro de la celda de Asignaturas */
+#programas .table ul {
+    list-style: none; /* Quitamos los bullets por defecto de la lista */
+    padding: 0; /* Quitamos el padding por defecto de la lista */
+    margin: 0; /* Quitamos el margen por defecto de la lista */
+}
+
+#programas .table ul strong {
+    display: block; /* Hace que el "Nivel X:" o "Prácticas y Vinculación:" ocupe toda la línea */
+    margin-top: 15px; /* Espacio antes del título del nivel */
+    margin-bottom: 8px;
+    color: #E91E63; /* Color rosa para los títulos de nivel */
+    font-size: 1.1em;
+    border-bottom: 1px dashed rgba(233, 30, 99, 0.3); /* Línea punteada debajo del nivel */
+    padding-bottom: 5px;
+}
+
+#programas .table ul li {
+    margin-bottom: 5px;
+    font-size: 0.95em;
+    line-height: 1.4;
+    position: relative;
+    padding-left: 20px; /* Espacio para nuestro custom bullet */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#programas .table ul li::before {
+    content: '•'; /* Un bullet simple para la lista de asignaturas */
+    color: #673AB7; /* Color morado para el bullet */
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* Responsive para la sección de Programas y Asignaturas */
+@media (max-width: 991.98px) { /* Tablets y móviles */
+    #programas tr {
+        width: 100%; /* Ocupa el 100% del contenedor en móviles */
+        max-width: 400px; /* Ancho máximo para que no sea demasiado ancha en tablets */
+        margin: 0 auto; /* Centrar la tarjeta */
+    }
+
+    #programas tbody {
+        flex-direction: column; /* Asegurarse de que se apilen si hay múltiples programas */
+        align-items: center;
+    }
+}
+
+
+/* --- Estilos Específicos para la Sección de Credenciales --- */
+/* (Se mantienen los estilos anteriores que funcionan bien) */
+#credenciales .table {
+    display: block;
+    border: none;
     margin: 0;
-    font-size: 0.9rem;
+    padding: 0;
+}
+
+#credenciales thead {
+    display: none;
+}
+
+#credenciales tbody {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+#credenciales tr {
+    display: flex;
+    flex-direction: column;
+    width: calc(33.333% - 20px);
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+#credenciales tr:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+#credenciales td {
+    border: none;
+    padding: 8px 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#credenciales td:first-child {
+    margin-bottom: 10px;
+}
+
+#credenciales td:first-child img {
+    max-height: 60px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+#credenciales td:nth-child(2) {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #4A148C;
+}
+
+#credenciales td:nth-child(3) {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #E91E63;
+    word-break: break-all;
+    overflow-wrap: break-word;
+}
+
+
+/* Responsive para la sección de Credenciales */
+@media (max-width: 991.98px) {
+    #credenciales tbody {
+        flex-direction: column;
+        align-items: center;
+    }
+    #credenciales tr {
+        width: 80%;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #credenciales tr {
+        width: 95%;
+        padding: 15px;
+    }
+    #credenciales td:first-child img {
+        max-height: 50px;
+    }
+    #credenciales td:nth-child(2),
+    #credenciales td:nth-child(3) {
+        font-size: 1em;
+    }
+}
+
+
+/* Estilos para Pagos */
+#pagos p {
+    font-size: 1.05rem;
+    color: #444;
+}
+
+#pagos strong {
+    color: #4A148C;
+}
+
+#pagos .btn-primary {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#pagos .form-control[type="file"] {
+    border: 1px solid #673AB7;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+#pagos .alert-info {
+    background-color: rgba(103, 58, 183, 0.1);
+    border-color: rgba(103, 58, 183, 0.3);
+    color: #4A148C;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+#pagos img {
+    max-width: 250px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+
+/* Responsive general para todas las secciones de contenido */
+@media (max-width: 767.98px) {
+    .section-content {
+        padding: 25px;
+        margin: 0 15px 30px 15px;
+    }
+
+    .section-content h2 {
+        font-size: 2rem;
+    }
+
+    .section-content h4 {
+        font-size: 1.3rem;
+    }
 }
