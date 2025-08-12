@@ -282,7 +282,7 @@
             <div class="mb-4">
                 <h4>Pago a través de Payphone</h4>
                 <p>Haz clic en el siguiente enlace para realizar tu pago con Payphone:</p>
-                <a href="https://link_de_payphone" target="_blank" class="btn btn-primary">Pagar con Payphone</a>
+                <a href="/app/views/pagos.php" target="_blank" class="btn btn-primary">Pagar con Payphone</a>
             </div>
 
             <!-- Código QR para Banco del Pichincha -->

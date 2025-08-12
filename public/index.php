@@ -26,10 +26,16 @@ switch ($uri) {
         $controller->mostrarInformacion();
         break;
 
-    /*case '/public/logout':
+    case '/public/logout':
         $controller = new LoginController();
         $controller->cerrarSesion();
-        break;*/
+        break;
+
+    case '/public/payment-success':
+        require_once '../app/controllers/PaymentController.php';
+        $controller = new PaymentController();
+        $controller->handlePayphoneCallback();
+        break;
 
     default:
         http_response_code(404);

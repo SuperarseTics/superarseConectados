@@ -130,49 +130,6 @@ class LoginController
         return $credenciales;
     }
 
-/*    public function generarCodigoQR()
-{
-    // Información del pago (esto lo puedes obtener de tu base de datos o configurar manualmente)
-    $codigoPago = '12345-6789';  // Este código debe ser el que el banco te proporcione
-    $numeroCuenta = '9876543210'; // Número de cuenta del beneficiario
-    $monto = '50.00';  // Monto a pagar
-    $concepto = 'Pago de matrícula';  // Concepto del pago
-
-    // Datos a incluir en el QR (debes configurar el formato que el banco usa)
-    $datosPago = "Banco Pichincha\nCódigo: $codigoPago\nCuenta: $numeroCuenta\nMonto: $monto\nConcepto: $concepto";
-
-    // Usamos la librería para generar el código QR
-    require_once 'path/to/phpqrcode/qrlib.php';  // Asegúrate de que la ruta sea correcta
-    $tempDir = 'uploads/qrs/';
-    $fileName = 'codigo_pago_banco_pichincha.png';
-
-    // Genera el código QR y guarda el archivo en el servidor
-    QRcode::png($datosPago, $tempDir . $fileName);
-    // Pasamos la URL del QR a la vista
-    $qrCodeUrl = '/uploads/qrs/' . $fileName;
-
-    // Recuperamos la información del usuario (como ya lo habías hecho antes)
-    session_start();
-    $cedula = $_SESSION['cedula'];
-    $db = Database::connect();
-    $stmt = $db->prepare("SELECT * FROM users WHERE numero_identificacion = ?");
-    $stmt->execute([$cedula]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$usuario) {
-        echo "No se encontró la información del usuario.";
-        exit();
-    }
-
-    // Pasamos los datos a la vista
-    require_once __DIR__ . '/../helpers/View.php';
-    View::render(__DIR__ . '/../views/pagos.php', [
-        'usuario' => $usuario,
-        'qrCodeUrl' => $qrCodeUrl  // Pasamos la URL del código QR
-    ]);
-}*/
-
-
     public function cerrarSesion()
     {
         session_start();
@@ -180,4 +137,6 @@ class LoginController
         header("Location: /public/login");
         exit();
     }
+
+    
 }
