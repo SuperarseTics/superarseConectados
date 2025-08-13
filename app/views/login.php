@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Usando Font Awesome según tu HTML -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+
     <!-- Enlace al archivo de estilos externo -->
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -30,19 +30,19 @@
                         <div class="card-body">
                             <h2 class="card-title text-center mb-4 fs-3">Iniciar Sesión</h2>
                             <!-- La acción del formulario ha sido restaurada para apuntar al validador. -->
-                            <form action="/public/login/validar" method="POST">
+                            <form id="cedulaForm" action="/public/login/validar" method="POST">
                                 <div class="mb-3">
                                     <label for="cedula" class="form-label visually-hidden">Cédula</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                        <input type="text" class="form-control form-control-lg" id="cedula" name="cedula" placeholder="Ingresa tu cédula" required>
+                                        <input type="text" class="form-control form-control-lg" id="cedula" name="cedula" maxlength="10" placeholder="Ingresa tu cédula" required>
                                     </div>
                                 </div>
                                 <div class="d-grid gap-2">
-                                    <!-- El botón es de tipo submit para enviar la información al validador. -->
                                     <button type="submit" class="btn btn-primary btn-lg">Ingresar</button>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
 
     <footer class="bg-dark text-white text-center py-3 mt-auto">
         <div class="container">
-            <p class="mb-0">&copy; 2024 Instituto Superarse. Todos los derechos reservados.</p>
+            <p class="mb-0">&copy; 2025 Instituto Superarse. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -86,13 +86,13 @@
             if (error) {
                 let message = "Ha ocurrido un error inesperado.";
                 if (error === 'cedula_no_encontrada') {
-                    message = "La cédula no se encuentra registrada.";
+                    message = "La cédula no se encuentra registrada. <br>Para obtener más información, comuníquese por WhatsApp al siguiente número: <a href='https://wa.me/593987289072' target='_blank'>098 728 9072</a>";
                 } else if (error === 'campos_vacios') {
                     message = "Debe ingresar la cédula.";
                 }
-                
+
                 if (errorMessageElement) {
-                    errorMessageElement.innerText = message;
+                    errorMessageElement.innerHTML = message;
                 }
 
                 const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
@@ -100,6 +100,8 @@
             }
         });
     </script>
+
+
 </body>
 
 </html>

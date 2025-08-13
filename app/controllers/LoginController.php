@@ -36,62 +36,63 @@ class LoginController
     }
 
     public function mostrarInformacion()
-{
-    session_start();
+    {
+        session_start();
 
-    // Verificamos si hay sesión activa
-    if (!isset($_SESSION['cedula'])) {
-        header("Location: /public/login");
-        exit();
+        // Verificamos si hay sesión activa
+        if (!isset($_SESSION['cedula'])) {
+            header("Location: /public/login");
+            exit();
+        }
+
+        // Recuperamos la cédula del usuario desde la sesión
+        $cedula = $_SESSION['cedula'];
+
+        // Conectamos a la base de datos
+        $db = Database::connect();
+
+        // Consultamos la información del usuario
+        $stmt = $db->prepare("SELECT * FROM users WHERE numero_identificacion = ?");
+        $stmt->execute([$cedula]);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$usuario) {
+            echo "No se encontró la información del usuario.";
+            exit();
+        }
+
+        // Formateamos los datos que necesitamos
+        $informacionUsuario = [
+            'codigo_matricula' => $usuario['codigo_matricula'], // Asumiendo que 'codigo_matricula' existe en la tabla
+            'nombres' => $usuario['primer_nombre'] . ' ' . $usuario['segundo_nombre'], // Concatenamos los nombres
+            'apellidos' => $usuario['primer_apellido'] . ' ' . $usuario['segundo_apellido'], // Concatenamos los apellidos
+            'tipo_identificacion' => $usuario['tipo_identificacion'], // Tipo de identificación (por ejemplo, cédula, pasaporte)
+            'numero_identificacion' => $usuario['numero_identificacion'], // El número de identificación
+            'estado' => $usuario['estado'], // El estado del usuario
+            'cond_matricula' => $usuario['cond_matricula'], // La condición de matrícula del usuario
+            'programa' => $usuario['programa'], // El programa al que pertenece el usuario
+            'periodo' => $usuario['periodo'], // El periodo de estudios
+            'nivel' => $usuario['nivel'], // El nivel académico
+            'usuario' => $usuario['usuario'], // El nombre de usuario
+        ];
+
+        // Obtenemos el programa y las asignaturas
+        $programaYAsignaturas = $this->obtenerProgramaYAsignaturas($informacionUsuario['programa']);
+        $programa = $programaYAsignaturas['programa'];
+        $asignaturas = $programaYAsignaturas['asignaturas'];
+
+        // Obtenemos las credenciales del usuario
+        $credenciales = $this->obtenerCredenciales($usuario['id']);
+
+        // Pasamos los datos a la vista
+        require_once __DIR__ . '/../helpers/View.php';
+        View::render(__DIR__ . '/../views/informacion.php', [
+            'informacionUsuario' => $informacionUsuario,
+            'programa' => $programa,
+            'asignaturas' => $asignaturas,
+            'credenciales' => $credenciales
+        ]);
     }
-
-    // Recuperamos la cédula del usuario desde la sesión
-    $cedula = $_SESSION['cedula'];
-
-    // Conectamos a la base de datos
-    $db = Database::connect();
-
-    // Consultamos la información del usuario
-    $stmt = $db->prepare("SELECT * FROM users WHERE numero_identificacion = ?");
-    $stmt->execute([$cedula]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$usuario) {
-        echo "No se encontró la información del usuario.";
-        exit();
-    }
-
-    // Formateamos los datos que necesitamos
-    $informacionUsuario = [
-        'codigo_matricula' => $usuario['codigo_matricula'], // Asumiendo que 'codigo_matricula' existe en la tabla
-        'nombres' => $usuario['primer_nombre'] . ' ' . $usuario['segundo_nombre'], // Concatenamos los nombres
-        'apellidos' => $usuario['primer_apellido'] . ' ' . $usuario['segundo_apellido'], // Concatenamos los apellidos
-        'tipo_identificacion' => $usuario['tipo_identificacion'], // Tipo de identificación (por ejemplo, cédula, pasaporte)
-        'numero_identificacion' => $usuario['numero_identificacion'], // El número de identificación
-        'estado' => $usuario['estado'], // El estado del usuario
-        'programa' => $usuario['programa'], // El programa al que pertenece el usuario
-        'periodo' => $usuario['periodo'], // El periodo de estudios
-        'nivel' => $usuario['nivel'], // El nivel académico
-        'usuario' => $usuario['usuario'], // El nombre de usuario
-    ];
-
-    // Obtenemos el programa y las asignaturas
-    $programaYAsignaturas = $this->obtenerProgramaYAsignaturas($informacionUsuario['programa']);
-    $programa = $programaYAsignaturas['programa'];
-    $asignaturas = $programaYAsignaturas['asignaturas'];
-
-    // Obtenemos las credenciales del usuario
-    $credenciales = $this->obtenerCredenciales($usuario['id']);
-
-    // Pasamos los datos a la vista
-    require_once __DIR__ . '/../helpers/View.php';
-    View::render(__DIR__ . '/../views/informacion.php', [
-        'informacionUsuario' => $informacionUsuario,
-        'programa' => $programa,
-        'asignaturas' => $asignaturas,
-        'credenciales' => $credenciales
-    ]);
-}
 
     public function obtenerProgramaYAsignaturas($programaNombre)
     {
@@ -137,6 +138,4 @@ class LoginController
         header("Location: /public/login");
         exit();
     }
-
-    
 }

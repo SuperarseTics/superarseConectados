@@ -75,8 +75,8 @@
                         <td><?= htmlspecialchars($informacionUsuario['numero_identificacion']) ?></td>
                     </tr>
                     <tr>
-                        <th>Estado</th>
-                        <td><?= htmlspecialchars($informacionUsuario['estado']) ?></td>
+                        <th>Estado / Cond. Matrícula</th>
+                        <td><?= htmlspecialchars($informacionUsuario['estado']) ?> / <?= htmlspecialchars($informacionUsuario['cond_matricula']) ?></td>
                     </tr>
                     <tr>
                         <th>Programa</th>
@@ -88,7 +88,7 @@
                     </tr>
                     <tr>
                         <th>Nivel</th>
-                        <td><?= htmlspecialchars($informacionUsuario['nivel']) ?></td>
+                        <td><?= htmlspecialchars($informacionUsuario['nivel']) ?> <br> <a href="https://site2.q10.com/Prematricula" target="_blank">Prematriculate Aqui!</a> / <a href="https://isuperarse-my.sharepoint.com/personal/leonardo_iza_superarse_edu_ec/_layouts/15/stream.aspx?id=%2Fpersonal%2Fleonardo%5Fiza%5Fsuperarse%5Fedu%5Fec%2FDocuments%2FTUTORIALES%20Q10%2FPREMATRICULAS%20Q10%20EDITADO%2EMOV&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Eeb061361%2Df39e%2D4175%2D83b4%2D1054c0157096" target="_blank">¿Como me prematriculo?</a></td>
                     </tr>
                     <tr>
                         <th>Usuario</th>
@@ -246,7 +246,7 @@
                                     </a> <!-- Enlace dinámico según la plataforma -->
                                 </td>
 
-                                <td><?= htmlspecialchars($informacionUsuario['usuario']) ?></td>
+                                <td style="white-space: nowrap; font-size: medium;"><?= htmlspecialchars($informacionUsuario['usuario']) ?></td>
                                 <td><?= htmlspecialchars($credencial['password_hash']) ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -265,37 +265,49 @@
             <h2>Opciones de Pago</h2>
 
             <!-- Transferencias Bancarias -->
+
             <div class="mb-4">
                 <h4>Pago por Transferencia Bancaria</h4>
-                <p>Realiza una transferencia bancaria al siguiente número de cuenta:</p>
-                <p><strong>Banco:</strong> Banco del Pichincha</p>
-                <p><strong>Cuenta de Ahorros:</strong> 123-456-7890</p>
-                <p><strong>RUC:</strong> 099999999999</p>
-                <p><strong>Referencia de Pago:</strong> [Código de Matrícula]</p>
-                <p><strong>Nombre del Beneficiario:</strong> Universidad XYZ</p>
+                <p>Selecciona una de las siguientes cuentas para realizar tu transferencia:</p>
 
-                <label for="transferencia-file" class="form-label">Sube tu comprobante de transferencia:</label>
+                <div class="btn-group mb-3" role="group" id="opciones-bancos">                    
+                    <button type="button" class="btn btn-primary" data-id="produbanco">Banco del Produbanco</button>
+                    <button type="button" class="btn btn-primary" data-id="guayaquil">Banco de Guayaquil</button>
+                </div>
+
+                <div id="info-cuenta-seleccionada" class="mt-3">
+                </div>
+
+                <p class="mt-3"><strong>Tipo de cuenta:</strong> Cuenta Corriente</p>
+                <p><strong>Nombre del Beneficiario:</strong> Instituto Superior Tecnológico Superarse</p>
+
+                <label for="transferencia-file" class="form-label mt-3">Sube tu comprobante de transferencia:</label>
                 <input type="file" class="form-control" id="transferencia-file" accept="image/*">
+
+                <a href="#" class="btn btn-primary mt-3 d-none" id="enviar-btn">Enviar Comprobante</a>
             </div>
 
             <!-- Payphone -->
             <div class="mb-4">
                 <h4>Pago a través de Payphone</h4>
+
+                <label for="cantidad" class="form-label mt-3">Cantidad:</label>
+                <input type="text" class="form-control" id="cantidad" placeholder="Ingresar el valor a pagar">
+
                 <p>Haz clic en el siguiente enlace para realizar tu pago con Payphone:</p>
-                <a href="/app/views/pagos.php" target="_blank" class="btn btn-primary">Pagar con Payphone</a>
+                <a href="#" id="payphone-link" class="btn btn-primary">Pagar con Payphone</a>
             </div>
 
             <!-- Código QR para Banco del Pichincha -->
-            <div class="mb-4">
+            <!--<div class="mb-4">
                 <h4>Código QR para Banco del Pichincha</h4>
                 <p>Escanea el siguiente código QR para realizar tu pago en el Banco del Pichincha:</p>
                 <div class="alert alert-info" role="alert">
                     <strong>Información de Pago:</strong> Código de pago: 12345-6789
                 </div>
 
-                <!-- Código QR generado -->
                 <img src="<?= $qrCodeUrl ?>" alt="Código QR Pago Banco Pichincha" class="img-fluid">
-            </div>
+            </div>-->
 
         </div>
     </div>
@@ -327,6 +339,90 @@
             showSection('informacion');
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const infoCuentas = {
+                produbanco: {
+                    banco: 'Banco del Produbanco',
+                    cuenta: '020052905577',
+                    ruc: '1792951704001'
+                },
+                guayaquil: {
+                    banco: 'Banco de Guayaquil',
+                    cuenta: '13748241',
+                    ruc: '1792951704001'
+                }
+            };
+
+            const opcionesContainer = document.getElementById('opciones-bancos');
+            const infoContainer = document.getElementById('info-cuenta-seleccionada');
+            const botones = opcionesContainer.querySelectorAll('.btn');
+            const inputFile = document.getElementById('transferencia-file');
+            const enviarBtn = document.getElementById('enviar-btn');
+
+            // Función para mostrar la información de la cuenta seleccionada
+            function mostrarInfoCuenta(bancoId) {
+                const data = infoCuentas[bancoId];
+                if (data) {
+                    infoContainer.innerHTML = `
+                <p><strong>Banco:</strong> ${data.banco}</p>
+                <p><strong>Cuenta de Ahorros:</strong> ${data.cuenta}</p>
+                <p><strong>RUC:</strong> ${data.ruc}</p>
+            `;
+
+                    botones.forEach(btn => btn.classList.remove('active'));
+                    document.querySelector(`button[data-id="${bancoId}"]`).classList.add('active');
+                } else {
+                    infoContainer.innerHTML = '';
+                }
+            }
+
+            // Agregar el event listener a cada botón de banco
+            botones.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const bancoId = this.getAttribute('data-id');
+                    mostrarInfoCuenta(bancoId);
+                });
+            });
+
+            // Mostrar la información del primer banco por defecto al cargar la página
+            if (botones.length > 0) {
+                mostrarInfoCuenta(botones[0].getAttribute('data-id'));
+            }
+
+            // Listener para el input de archivo
+            inputFile.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    // El usuario subió un archivo, mostramos el botón
+                    enviarBtn.classList.remove('d-none');
+                    // Creamos el enlace mailto
+                    const subject = encodeURIComponent('Comprobante de Pago');
+                    const body = encodeURIComponent('Adjunto el comprobante de pago. \n\nGracias.');
+                    enviarBtn.href = `mailto:matriculas@superarse.edu.ec?subject=${subject}&body=${body}`;
+                } else {
+                    // No hay archivo, ocultamos el botón
+                    enviarBtn.classList.add('d-none');
+                }
+            });
+        });
+    </script>
+
+    <script>
+    document.getElementById('payphone-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        const cantidadInput = document.getElementById('cantidad').value.replace(',', '.');
+        const cantidad = parseFloat(cantidadInput);
+
+        if (!cantidad || isNaN(cantidad)) {
+            alert("Por favor ingresa una cantidad válida");
+            return;
+        }
+
+        const cantidadFinal = Math.round(cantidad * 100);
+        const url = `/app/views/pagos.php?cantidad=` + encodeURIComponent(cantidadFinal);
+        window.open(url, '_blank');
+    });
+</script>
 </body>
 
 </html>
