@@ -31,7 +31,7 @@ switch ($uri) {
         $controller->cerrarSesion();
         break;
 
-    case '/public/payment-success':
+    case '/public/payment-callback':
         require_once '../app/controllers/PaymentController.php';
         $controller = new PaymentController();
         $controller->handlePayphoneCallback();

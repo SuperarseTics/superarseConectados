@@ -11,11 +11,35 @@ $cantidad = isset($_GET['cantidad']) ? floatval($_GET['cantidad']) : 0.0;
 $amount = max(0, $cantidad); // Valor total
 $amountWithoutTax = $amount; // Mismo valor si no hay impuesto
 $tax = 0.0; // No se aplica impuesto
+$referencia = isset($_GET['referencia']) ? htmlspecialchars($_GET['referencia']) : "Pago de Superarse";
+$status = isset($_GET['status']) ? $_GET['status'] : null;
+
+// --- LÓGICA PARA MOSTRAR CONTENIDO SEGÚN EL ESTADO DE LA TRANSACCIÓN ---
+if ($status === 'success') {
+    // Si el estado es 'success', mostramos la página de éxito
+    $payphone_id = $_GET['id'] ?? 'N/A';
+    $client_transaction_id = $_GET['clientTransactionId'] ?? 'N/A';
+
+    echo "<h1>¡Pago Exitoso! ✅</h1>";
+    echo "<p>ID de Transacción de PayPhone: " . htmlspecialchars($payphone_id) . "</p>";
+    echo "<p>ID de tu Transacción: " . htmlspecialchars($client_transaction_id) . "</p>";
+    exit();
+} elseif ($status === 'failure') {
+    // Si el estado es 'failure', mostramos la página de fracaso
+    echo "<h1>¡El pago ha fallado! 😞</h1>";
+    echo "<p>Por favor, inténtalo de nuevo.</p>";
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasarela de pagos - Superarse</title>
+    <link rel="icon" type="image/png" href="/assets/logos/logoSuperarse.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://cdn.payphonetodoesposible.com/box/v1.1/payphone-payment-box.js" type="module"></script>
     <link href="https://cdn.payphonetodoesposible.com/box/v1.1/payphone-payment-box.css" rel="stylesheet">
 
@@ -23,22 +47,38 @@ $tax = 0.0; // No se aplica impuesto
 </head>
 
 <body>
+    <header class="text-white text-center py-3 shadow-sm">
+        <div class="container">
+            <p class="lead mb-0">Plataforma de Pagos - Superarse</p>
+        </div>
+    </header>
+
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const ppb = new PPaymentButtonBox({
-                token: 'SvktbKo68OUxwwe1bP_6I1Z1ivIVX_en7mcuj17S0J_OzGB_6V0jrJWSBBbi3yJx5IfbRegfc0QLBxND2IslkrZrSlKN5B2dHwnRkVHbw1B6M_Pde9_bAHAyNb-pg-7JhbXqEMyl60wRgsoGmLSRR2hfCrD_JeQyYz8ypY_Igi0N5_1AuRfuBQRFe3ePQP-fpcYskWyahpz-2Tb3ldkfqdPlE0oJesIbWMFcEdTRI22D-uA-HpRvTOUeTpIDitoeHx83WdcXY682TKhR31DTcjQwsgxJ3T9SOqoStbQ0q6uj8_rI5z_Z7PXJ2gIb6oDF1tGIEV_Xk5mWMkA8VZYuwNqqzgg',
+                token: '8W-4m1qWExjBDCoReWHZUSh4B1tNHuK8EGOviJbt4gI6j4pZ_HOxNVRYjevU9CJ-huw21fTmZz0qDOiA_NmzaA0bsVbcYWArG3SkIR3FLnC3qqE_REmuiKy9DefawP-No8nZ-EguZiWBSQHR7CDLiBNgacy7u45Ht2XsO1THDbo6lJS2VnpfmfS1VdCCALbTY7Z8iFFpXJp6IFGFC8NawUZIcVlrMAKSjHc1NF_e1wxgvZ4K8Jg1LKX6MSzsRJ9yloDEB1rWBroX2Lsze61au-D1L_e0-fV6XTwiUKi6vJRoEmNs7soTqEYrBjb6FM9hbmEEpxAzinOjkodgMQWkdT8lSuw',
                 clientTransactionId: '<?= htmlspecialchars($clientTransactionId) ?>',
                 amount: <?= $amount ?>,
                 amountWithoutTax: <?= $amountWithoutTax ?>,
                 tax: <?= $tax ?>,
                 currency: "USD",
                 storeId: "d3fcb722-dfe9-4e7c-8b33-cf8fbd309006",
-                reference: "Pago por cuota de Superarse",
+                reference: '<?= htmlspecialchars($referencia) ?>',
+
+                // Redirección para éxito
+                successUrl: '/app/controllers/handle_payment.php',
+                failureUrl: '/app/controllers/handle_payment.php'
             }).render('pp-button');
         });
     </script>
 
-    <div id="pp-button"></div>
+    <div class="container-fluid" id="pp-button"></div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 Instituto Superarse. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
 
 </html>

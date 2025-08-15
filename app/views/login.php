@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conectados Superarse - Iniciar Sesión</title>
+    <link rel="icon" type="image/png" href="/assets/logos/logoSuperarse.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Usando Font Awesome según tu HTML -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -86,7 +87,7 @@
             if (error) {
                 let message = "Ha ocurrido un error inesperado.";
                 if (error === 'cedula_no_encontrada') {
-                    message = "La cédula no se encuentra registrada. <br>Para obtener más información, comuníquese por WhatsApp al siguiente número: <a href='https://wa.me/593987289072' target='_blank'>098 728 9072</a>";
+                    message = "Estimado/a, la cédula ingresada no se encuentra registrada en nuestro sistema.<br><br>Para recibir más información sobre nuestras carreras, puede comunicarse al siguiente número de WhatsApp: <a href='https://wa.me/593987289072' target='_blank'><strong>098&nbsp;728&nbsp;9072</strong></a>.<br><br>Le invitamos a conocer nuestra <a href='https://superarse.edu.ec/' target='_blank'><strong>oferta académica</strong></a> y descubrir las oportunidades que tenemos para usted.";
                 } else if (error === 'campos_vacios') {
                     message = "Debe ingresar la cédula.";
                 }
