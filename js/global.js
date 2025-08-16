@@ -31,13 +31,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (data) {
       infoContainer.innerHTML = `
 
-                        <p><strong>Banco:</strong> ${data.banco}</p>
+        <p><strong>Banco:</strong> ${data.banco}</p>
 
-                        <p><strong>Cuenta de Ahorros:</strong> ${data.cuenta}</p>
+        <p><strong>Cuenta de Ahorros:</strong> ${data.cuenta}</p>
 
-                        <p><strong>RUC:</strong> ${data.ruc}</p>
+        <p><strong>RUC:</strong> ${data.ruc}</p>
 
-                        `;
+        `;
 
       botones.forEach((btn) => btn.classList.remove("active"));
 
