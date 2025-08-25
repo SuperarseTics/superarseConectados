@@ -114,9 +114,9 @@ function renderizarCredenciales(credenciales, usuario) {
     }
 
     const logoPaths = {
-        'Q10': '/assets/logos/Q10.png',
-        'Office 365 /Teams': '/assets/logos/Office365.png',
-        'eLibro': '/assets/logos/eLibro.png',
+        'Q10': '/superarseconectados/assets/logos/Q10.png',
+        'Office 365 /Teams': '/superarseconectados/assets/logos/Office365.png',
+        'eLibro': '/superarseconectados/assets/logos/eLibro.png',
     };
 
     const urls = {
@@ -127,7 +127,7 @@ function renderizarCredenciales(credenciales, usuario) {
 
     const html = credenciales.map(credencial => {
         const plataforma = credencial.plataforma;
-        const logo = logoPaths[plataforma] || '/assets/logos/logo-default.png';
+        const logo = logoPaths[plataforma] || '/superarseconectados/assets/logos/logo-default.png';
         const url = urls[plataforma] || '#';
         
         return `

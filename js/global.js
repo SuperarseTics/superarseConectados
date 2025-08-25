@@ -110,7 +110,7 @@ document
     const cantidadFinal = Math.round(cantidad * 100);
 
     const url =
-      `/app/views/pagos.php?cantidad=` +
+      `/superarseconectados/public/pago?cantidad=` +
       encodeURIComponent(cantidadFinal) +
       `&referencia=` +
       encodeURIComponent(referencia);

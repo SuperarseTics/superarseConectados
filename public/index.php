@@ -1,40 +1,51 @@
 <?php
 require_once '../app/controllers/LoginController.php';
 
-// Normalizar la URI quitando barras finales (excepto para raíz)
+// Obtener la URI y eliminar el subdirectorio base
 $uri = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+$basePath = '/superarseconectados/public';
+
+if (strpos($uri, $basePath) === 0) {
+    $uri = substr($uri, strlen($basePath));
+}
+
+// Asegurar que la URI de la página de inicio sea '/' o ''
+if ($uri === '') {
+    $uri = '/';
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Rutas
 switch ($uri) {
-    case '/public':
-    case '/public/login':
+    case '/':
+    case '/login':
         require_once '../app/views/login.php';
         break;
 
-    case '/public/login/validar':
+    case '/login/validar':
         if ($method === 'POST') {
             $controller = new LoginController();
             $controller->validar();
         } else {
-            header("Location: /public/login");
+            header("Location: " . $basePath . "/login");
         }
         break;
 
-    case '/public/informacion':
+    case '/informacion':
         $controller = new LoginController();
         $controller->mostrarInformacion();
         break;
 
-    case '/public/logout':
+    case '/logout':
         $controller = new LoginController();
         $controller->cerrarSesion();
         break;
 
-    case '/public/payment-callback':
+    case '/pago':
         require_once '../app/controllers/PaymentController.php';
         $controller = new PaymentController();
-        $controller->handlePayphoneCallback();
+        $controller->showPaymentPage();
         break;
 
     default:

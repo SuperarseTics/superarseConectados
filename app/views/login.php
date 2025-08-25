@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conectados Superarse - Iniciar Sesión</title>
-    <link rel="icon" type="image/png" href="/assets/logos/logoSuperarse.png" />
+    <link rel="icon" type="image/png" href="/superarseconectados/assets/logos/logoSuperarse.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Usando Font Awesome según tu HTML -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Enlace al archivo de estilos externo -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/superarseconectados/css/style.css">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
     <header class="text-white text-center py-3 shadow-sm">
         <div class="container">
-            <img src="/assets/logos/logoSuperarse.png" onerror="this.onerror=null; this.src='/assets/logos/logoSuperarse.png';" alt="Logo de Superarse" class="logo img-fluid mb-2">
+            <img src="/superarseconectados/assets/logos/logoSuperarse.png" onerror="this.onerror=null; this.src='/superarseconectados/assets/logos/logoSuperarse.png';" alt="Logo de Superarse" class="logo img-fluid mb-2">
             <p class="lead mb-0">Plataforma Conectados</p>
         </div>
     </header>
@@ -31,7 +31,7 @@
                         <div class="card-body">
                             <h2 class="card-title text-center mb-4 fs-3">Iniciar Sesión</h2>
                             <!-- La acción del formulario ha sido restaurada para apuntar al validador. -->
-                            <form id="cedulaForm" action="/public/login/validar" method="POST">
+                            <form id="cedulaForm" action="/superarseconectados/public/login/validar" method="POST">
                                 <div class="mb-3">
                                     <label for="cedula" class="form-label visually-hidden">Cédula</label>
                                     <div class="input-group">

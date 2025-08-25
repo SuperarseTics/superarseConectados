@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información del Estudiante</title>
-    <link rel="icon" type="image/png" href="/assets/logos/logoSuperarse.png" />
+    <link rel="icon" type="image/png" href="/superarseconectados/assets/logos/logoSuperarse.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/superarseconectados/css/style.css">
 </head>
 
 <body>
@@ -157,9 +157,9 @@
         const datosEstudiante = <?= json_encode($datos_estudiante) ?>;
     </script>
 
-    <script src="/js/main.js"></script>
+    <script src="/superarseconectados/js/main.js"></script>
 
-    <script src="/js/global.js"></script>
+    <script src="/superarseconectados/js/global.js"></script>
 
 </body>
 

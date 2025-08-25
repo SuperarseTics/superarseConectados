@@ -7,12 +7,12 @@ $tiempo_actual = date("H_i_s", $sec) . '_' . sprintf('%03d', $milisegundos);
 
 $clientTransactionId = "Superarse_" . $tiempo_actual;
 
-$cantidad = isset($_GET['cantidad']) ? floatval($_GET['cantidad']) : 0.0;
-$amount = max(0, $cantidad); // Valor total
-$amountWithoutTax = $amount; // Mismo valor si no hay impuesto
-$tax = 0.0; // No se aplica impuesto
-$referencia = isset($_GET['referencia']) ? htmlspecialchars($_GET['referencia']) : "Pago de Superarse";
-$status = isset($_GET['status']) ? $_GET['status'] : null;
+$cantidad = isset($cantidad) ? floatval($cantidad) : 0.0;
+$amount = max(0, $cantidad);
+$amountWithoutTax = $amount;
+$tax = 0.0;
+$referencia = isset($referencia) ? htmlspecialchars($referencia) : "Pago de Superarse";
+$status = isset($status) ? $status : null;
 
 // --- LÓGICA PARA MOSTRAR CONTENIDO SEGÚN EL ESTADO DE LA TRANSACCIÓN ---
 if ($status === 'success') {
@@ -38,12 +38,12 @@ if ($status === 'success') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pasarela de pagos - Superarse</title>
-    <link rel="icon" type="image/png" href="/assets/logos/logoSuperarse.png" />
+    <link rel="icon" type="image/png" href="/superarseconectados/assets/logos/logoSuperarse.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://cdn.payphonetodoesposible.com/box/v1.1/payphone-payment-box.js" type="module"></script>
     <link href="https://cdn.payphonetodoesposible.com/box/v1.1/payphone-payment-box.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/superarseconectados/css/style.css">
 </head>
 
 <body>
@@ -66,8 +66,8 @@ if ($status === 'success') {
                 reference: '<?= htmlspecialchars($referencia) ?>',
 
                 // Redirección para éxito
-                successUrl: '/app/controllers/handle_payment.php',
-                failureUrl: '/app/controllers/handle_payment.php'
+                successUrl: '/superarseconectados/app/controllers/handle_payment.php',
+                failureUrl: '/superarseconectados/app/controllers/handle_payment.php'
             }).render('pp-button');
         });
     </script>
