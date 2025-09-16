@@ -48,33 +48,33 @@ function renderizarInformacionEstudiante(info) {
     return;
   }
   let html = `
-        <tr><th>Código de Matrícula</th><td>${info.codigo_matricula}</td></tr>
-        <tr><th>Nombres</th><td>${info.nombres}</td></tr>
-        <tr><th>Apellidos</th><td>${info.apellidos}</td></tr>
-        <tr><th>Tipo de Identificación</th><td>${
-          info.tipo_identificacion
-        }</td></tr>
-        <tr><tr><th>Número de Identificación</th><td>${
-          info.numero_identificacion
-        }</td></tr>
-        <tr><th>Estado / Cond. Matrícula</th><td>${info.estado} / ${
+      <tr><th>Código de Matrícula</th><td>${info.codigo_matricula}</td></tr>
+      <tr><th>Nombres</th><td>${info.nombres}</td></tr>
+      <tr><th>Apellidos</th><td>${info.apellidos}</td></tr>
+      <tr><th>Tipo de Identificación</th><td>${
+        info.tipo_identificacion
+      }</td></tr>
+      <tr><th>Número de Identificación</th><td>${
+        info.numero_identificacion
+      }</td></tr>
+      <tr><th>Estado / Cond. Matrícula</th><td>${info.estado} / ${
     info.cond_matricula
   }</td></tr>
-        <tr><th>Carrera</th><td>${info.programa}</td></tr>
-        <tr><th>Periodo</th><td>${info.periodo}</td></tr>
-        <tr>
-            <th>Nivel</th>
-            <td>
-                ${info.nivel}
-                ${
-                  info.nivel !== "Nivel 1"
-                    ? '<br><a href="https://site2.q10.com/Prematricula" target="_blank">¡Prematrículate aquí!</a> / <a href="..." target="_blank">¿Cómo me prematriculo?</a>'
-                    : ""
-                }
-            </td>
-        </tr>
-        <tr><th>Usuario</th><td>${info.usuario}</td></tr>
-    `;
+      <tr><th>Carrera</th><td>${info.programa}</td></tr>
+      <tr><th>Periodo</th><td>${info.periodo}</td></tr>
+      <tr>
+          <th>Nivel</th>
+          <td>
+              ${info.nivel}
+              ${
+                info.nivel !== "Nivel 1"
+                  ? '<br><a href="https://site2.q10.com/Prematricula" target="_blank">¡Prematrículate aquí!</a> / <a href="..." target="_blank">¿Cómo me prematriculo?</a>'
+                  : ""
+              }
+          </td>
+      </tr>
+      <tr><th>Usuario</th><td>${info.usuario}</td></tr>
+  `;
   tabla.innerHTML = html;
 }
 
