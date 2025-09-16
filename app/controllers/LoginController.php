@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../models/Database.php';
 
+
 class LoginController
 {
     private function getBaseUrl()
@@ -55,22 +56,21 @@ class LoginController
         session_start();
 
         if (!isset($_SESSION['cedula'])) {
-            header("Location: /login");
+            header("Location: " . $this->getBaseUrl() . "/login");
             exit();
         }
 
         $cedula = $_SESSION['cedula'];
         $db = Database::connect();
-        $stmt = $db->prepare("SELECT * FROM users WHERE numero_identificacion = ? and periodo = 'PAO MAY-OCT 2025'");
+        $stmt = $db->prepare("SELECT * FROM users WHERE numero_identificacion = ?");
         $stmt->execute([$cedula]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$usuario) {
-            echo "No se encontró la información del usuario.";
+            header("Location: " . $this->getBaseUrl() . "/login?error=usuario_no_encontrado");
             exit();
         }
 
-        // Formatear los datos principales del usuario
         $informacionUsuario = [
             'codigo_matricula' => $usuario['codigo_matricula'] ?? null,
             'nombres' => ($usuario['primer_nombre'] ?? '') . ' ' . ($usuario['segundo_nombre'] ?? ''),
@@ -86,17 +86,23 @@ class LoginController
         ];
 
         $programaYAsignaturas = $this->obtenerProgramaYAsignaturas($informacionUsuario['programa']);
-        $credenciales = $this->obtenerCredenciales($usuario['id']);
+        $credenciales = [
+            ['plataforma' => 'Q10'],
+            ['plataforma' => 'Office 365 /Teams'],
+            ['plataforma' => 'eLibro']
+        ];
 
-        // Juntar todos los datos en un solo array para pasarlos a la vista
+        // --- Obtener los datos de pagos ---
+        $datos_pagos = $this->obtenerPagos($cedula);
+
         $datos_estudiante = [
             'informacionUsuario' => $informacionUsuario,
             'programa' => $programaYAsignaturas['programa'],
             'asignaturas' => $programaYAsignaturas['asignaturas'],
-            'credenciales' => $credenciales
+            'credenciales' => $credenciales,
+            'datos_pagos' => $datos_pagos
         ];
 
-        // Usamos el helper View y le pasamos el arreglo completo
         require_once __DIR__ . '/../helpers/View.php';
         View::render(__DIR__ . '/../views/informacion.php', ['datos_estudiante' => $datos_estudiante]);
     }
@@ -125,7 +131,7 @@ class LoginController
         return ['programa' => $programa, 'asignaturas' => $asignaturas];
     }
 
-    public function obtenerCredenciales($userId)
+    /*public function obtenerCredenciales($userId)
     {
         // Conectamos a la base de datos
         $db = Database::connect();
@@ -136,13 +142,95 @@ class LoginController
         $credenciales = $stmtCredenciales->fetchAll(PDO::FETCH_ASSOC);
 
         return $credenciales;
+    }*/
+
+    /*
+    //metodo para obtener los pagos del estudiante
+    public function obtenerPagos($cedula_usuario)
+    {
+        $db = Database::connect();
+        $sql = "SELECT * FROM pagos_estudiantes WHERE cedula = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$cedula_usuario]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $response = [
+            'cuotas' => [],
+            'abono_total' => $result['abono_total'] ?? null,
+            'observacion' => $result['observacion'] ?? null
+        ];
+
+        $cuotas_map = [
+            'cuota1_matricula',
+            'cuota2',
+            'cuota3',
+            'cuota4',
+            'cuota5',
+            'cuota6',
+            'cuota7',
+            'cuota8'
+        ];
+
+        foreach ($cuotas_map as $key) {
+            if (!empty($result[$key])) {
+                $num_cuota = str_replace(['cuota', '_matricula'], '', $key);
+                $pendiente_key = "pendiente_cuota{$num_cuota}";
+
+                $response['cuotas'][] = [
+                    'nombre' => ($key === 'cuota1_matricula') ? 'Cuota 1 (Matrícula)' : "Cuota {$num_cuota}",
+                    'valor' => $result[$key],
+                    'pendiente' => $result[$pendiente_key] ?? null
+                ];
+            }
+        }
+        return $response;
+    }*/
+
+    // En tu archivo LoginController.php
+    public function obtenerPagos($cedula_usuario)
+    {
+        $db = Database::connect();
+        $sql = "SELECT * FROM pagos_estudiantes WHERE cedula = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$cedula_usuario]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $response = [
+            'cuotas' => [],
+            'abono_total' => $result['abono_total'] ?? null,
+            'saldo_total' => $result['saldo_total'] ?? null, // <-- Asegúrate de que esta línea esté aquí
+            'observacion' => $result['observacion'] ?? null
+        ];
+
+        $cuotas_map = [
+            'cuota1_matricula',
+            'cuota2',
+            'cuota3',
+            'cuota4',
+            'cuota5',
+            'cuota6',
+            'cuota7',
+            'cuota8'
+        ];
+
+        foreach ($cuotas_map as $key) {
+            if (!empty($result[$key])) {
+                $num_cuota = str_replace(['cuota', '_matricula'], '', $key);
+                $pendiente_key = "pendiente_cuota{$num_cuota}";
+
+                $response['cuotas'][] = [
+                    'nombre' => ($key === 'cuota1_matricula') ? 'Cuota 1 (Matrícula)' : "Cuota {$num_cuota}",
+                    'valor' => $result[$key],
+                    'pendiente' => $result[$pendiente_key] ?? null
+                ];
+            }
+        }
+        return $response;
     }
 
     public function cerrarSesion()
     {
         session_start();
         session_destroy();
-        header("Location: " . $this->getBaseUrl() . "/login");
-        exit();
     }
 }

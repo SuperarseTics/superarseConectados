@@ -40,6 +40,8 @@ switch ($uri) {
     case '/logout':
         $controller = new LoginController();
         $controller->cerrarSesion();
+        require_once '../app/views/login.php';
+        exit();
         break;
 
     case '/pago':
