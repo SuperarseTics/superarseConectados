@@ -76,12 +76,6 @@
         </div>
         <div id="pagos" class="section-content">
             <h2>Opciones de Pago</h2>
-            <!--<div id="info-pagos" class="mb-4">
-                <h4>Resumen de Pagos</h4>
-                <div id="tabla-pagos-container" class="mt-3"></div>
-                <p class="mt-3"><strong>Abono Total:</strong> <span id="abono-total"></span></p>
-                <p><strong>Observaciones:</strong> <span id="observacion"></span></p>
-            </div>-->
             <div id="info-pagos" class="mb-4">
                 <h4>Resumen de Pagos</h4>
                 <div id="tabla-pagos-container" class="mt-3"></div>
