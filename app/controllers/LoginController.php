@@ -131,61 +131,6 @@ class LoginController
         return ['programa' => $programa, 'asignaturas' => $asignaturas];
     }
 
-    /*public function obtenerCredenciales($userId)
-    {
-        // Conectamos a la base de datos
-        $db = Database::connect();
-
-        // Consultamos las credenciales del usuario
-        $stmtCredenciales = $db->prepare("SELECT * FROM credenciales WHERE user_id = ? limit 3");
-        $stmtCredenciales->execute([$userId]);
-        $credenciales = $stmtCredenciales->fetchAll(PDO::FETCH_ASSOC);
-
-        return $credenciales;
-    }*/
-
-    /*
-    //metodo para obtener los pagos del estudiante
-    public function obtenerPagos($cedula_usuario)
-    {
-        $db = Database::connect();
-        $sql = "SELECT * FROM pagos_estudiantes WHERE cedula = ?";
-        $stmt = $db->prepare($sql);
-        $stmt->execute([$cedula_usuario]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $response = [
-            'cuotas' => [],
-            'abono_total' => $result['abono_total'] ?? null,
-            'observacion' => $result['observacion'] ?? null
-        ];
-
-        $cuotas_map = [
-            'cuota1_matricula',
-            'cuota2',
-            'cuota3',
-            'cuota4',
-            'cuota5',
-            'cuota6',
-            'cuota7',
-            'cuota8'
-        ];
-
-        foreach ($cuotas_map as $key) {
-            if (!empty($result[$key])) {
-                $num_cuota = str_replace(['cuota', '_matricula'], '', $key);
-                $pendiente_key = "pendiente_cuota{$num_cuota}";
-
-                $response['cuotas'][] = [
-                    'nombre' => ($key === 'cuota1_matricula') ? 'Cuota 1 (Matrícula)' : "Cuota {$num_cuota}",
-                    'valor' => $result[$key],
-                    'pendiente' => $result[$pendiente_key] ?? null
-                ];
-            }
-        }
-        return $response;
-    }*/
-
     // En tu archivo LoginController.php
     public function obtenerPagos($cedula_usuario)
     {

@@ -37,6 +37,10 @@ switch ($uri) {
         $controller->mostrarInformacion();
         break;
 
+    case '/practicas':
+        require_once '../app/views/practicas.php';
+        break;
+
     case '/logout':
         $controller = new LoginController();
         $controller->cerrarSesion();

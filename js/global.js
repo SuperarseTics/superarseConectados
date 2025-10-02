@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const infoCuentas = {
     produbanco: {
       banco: "Banco del Produbanco",
-      cuenta: "020052905577",
+      cuenta: "02005290577",
       ruc: "1792951704001",
     },
     guayaquil: {
