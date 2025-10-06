@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // ... (Tu código de pagos existente) ...
   const infoCuentas = {
     produbanco: {
       banco: "Banco del Produbanco",

@@ -460,7 +460,7 @@
     </script>
     <script src="/superarseconectados/js/main.js"></script>
     <script src="/superarseconectados/js/global.js"></script>
-    <script src="/superarseconectados/js/practicas.js"></script>
+    <!--<script src="/superarseconectados/js/practicas.js"></script>-->
 </body>
 
 </html>

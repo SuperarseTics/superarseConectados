@@ -98,4 +98,31 @@ class PracticaModel
     }
     
     // Aquí se añadirán más métodos para gestionar Entidades, Actividades, etc.
+    public function getEntidades() {
+        try {
+            $stmt = $this->db->query("SELECT * FROM entidades");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error al obtener entidades: " . $e->getMessage());
+            return [];
+        }
+    }
+    public function getActividades() {
+        try {
+            $stmt = $this->db->query("SELECT * FROM actividades");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error al obtener actividades: " . $e->getMessage());
+            return [];
+        }
+    }
+    public function getModalidades() {
+        try {
+            $stmt = $this->db->query("SELECT * FROM modalidades");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error al obtener modalidades: " . $e->getMessage());
+            return [];
+        }
+    }
 }
